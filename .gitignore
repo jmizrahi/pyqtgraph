@@ -7,3 +7,11 @@ deb_build
 dist
 .idea
 rtr.cvs
+.project
+.pydevproject
+.settings/org.eclipse.core.resources.prefs
+pyqtgraph.egg-info/PKG-INFO
+pyqtgraph.egg-info/SOURCES.txt
+pyqtgraph.egg-info/dependency_links.txt
+pyqtgraph.egg-info/requires.txt
+pyqtgraph.egg-info/top_level.txt
