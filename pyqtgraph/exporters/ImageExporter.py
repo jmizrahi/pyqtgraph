@@ -77,7 +77,7 @@ class ImageExporter(Exporter):
         
         ## set resolution of image:
         origTargetRect = self.getTargetRect()
-        resolutionScale = targetRect.width() / origTargetRect.width()
+        resolutionScale = targetRect.width() / float(origTargetRect.width())
         #self.png.setDotsPerMeterX(self.png.dotsPerMeterX() * resolutionScale)
         #self.png.setDotsPerMeterY(self.png.dotsPerMeterY() * resolutionScale)
         

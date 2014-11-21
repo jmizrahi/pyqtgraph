@@ -811,6 +811,8 @@ class AxisItem(GraphicsWidget):
         if None in points:
             return
         lengthInPixels = Point(points[1] - points[0]).length()
+        if self._exportOpts and 'resolutionScale' in self._exportOpts:
+            lengthInPixels /= self._exportOpts['resolutionScale']
         if lengthInPixels == 0:
             return
 
