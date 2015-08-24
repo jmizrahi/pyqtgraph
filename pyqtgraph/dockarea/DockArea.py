@@ -327,7 +327,11 @@ class TempAreaWindow(QtGui.QMainWindow):
     def __init__(self, area, **kwargs):
         QtGui.QMainWindow.__init__(self, **kwargs)
         self.setCentralWidget(area)
+        self.area = area
 
-    def closeEvent(self, *args, **kwargs):
+    def closeEvent(self, event):
+        for name, dock in self.area.docks.iteritems():
+            if self.area.home is not None:
+                self.area.home.addDock(dock, 'bottom')
         self.centralWidget().clear()
-        QtGui.QMainWindow.closeEvent(self, *args, **kwargs)
+        super(TempAreaWindow, self).closeEvent(event)
