@@ -234,6 +234,8 @@ class DockArea(Container, QtGui.QWidget, DockDrop):
         ## 3) create floating areas, populate
         for s in state['float']:
             a = self.addTempArea()
+            for name, dock in docks.iteritems():
+                a.docks[name] = dock
             a.buildFromState(s[0]['main'], docks, a)
             a.win.setGeometry(*s[1])
         
