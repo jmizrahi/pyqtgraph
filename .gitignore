@@ -107,3 +107,4 @@ rtr.cvs
 # ctags
 .tags*
 
+.settings/org.eclipse.core.resources.prefs
