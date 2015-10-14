@@ -234,6 +234,8 @@ class DockArea(Container, QtGui.QWidget, DockDrop):
         ## 3) create floating areas, populate
         for s in state['float']:
             a = self.addTempArea()
+            for name, dock in docks.iteritems():
+                a.docks[name] = dock
             a.buildFromState(s[0]['main'], docks, a)
             a.win.setGeometry(*s[1])
         
@@ -327,7 +329,11 @@ class TempAreaWindow(QtGui.QMainWindow):
     def __init__(self, area, **kwargs):
         QtGui.QMainWindow.__init__(self, **kwargs)
         self.setCentralWidget(area)
+        self.area = area
 
-    def closeEvent(self, *args, **kwargs):
+    def closeEvent(self, event):
+        for name, dock in self.area.docks.iteritems():
+            if self.area.home is not None:
+                self.area.home.addDock(dock, 'bottom')
         self.centralWidget().clear()
-        QtGui.QMainWindow.closeEvent(self, *args, **kwargs)
+        super(TempAreaWindow, self).closeEvent(event)
