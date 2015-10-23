@@ -49,7 +49,7 @@ class SVGExporter(Exporter):
         ## Qt's SVG generator is not complete. (notably, it lacks clipping)
         ## Instead, we will use Qt to generate SVG for each item independently,
         ## then manually reconstruct the entire document.
-        xml = generateSvg(self.item)
+        xml = generateSvg(self.item, self.getTargetRect())
         
         if toBytes:
             return xml.encode('UTF-8')
@@ -64,12 +64,14 @@ class SVGExporter(Exporter):
 
 xmlHeader = """\
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny"
+     width="{0}"
+     height="{1}">
 <title>pyqtgraph SVG export</title>
 <desc>Generated with Qt and pyqtgraph</desc>
 """
 
-def generateSvg(item):
+def generateSvg(item, rect):
     global xmlHeader
     try:
         node, defs = _generateItemSvg(item)
@@ -91,7 +93,7 @@ def generateSvg(item):
     for d in defs:
         defsXml += d.toprettyxml(indent='    ')
     defsXml += "</defs>\n"
-    return xmlHeader + defsXml + node.toprettyxml(indent='    ') + "\n</svg>\n"
+    return xmlHeader.format(rect.width(), rect.height()) + defsXml + node.toprettyxml(indent='    ') + "\n</svg>\n"
 
 
 def _generateItemSvg(item, nodes=None, root=None):
