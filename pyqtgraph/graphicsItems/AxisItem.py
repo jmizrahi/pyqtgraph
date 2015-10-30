@@ -628,7 +628,10 @@ class AxisItem(GraphicsWidget):
         
         if self.style['maxTickLevel'] >= 2:
             ## decide whether to include the last level of ticks
-            minSpacing = min(size / 20., 30.)
+            if self._exportOpts and 'resolutionScale' in self._exportOpts:
+                minSpacing = min(size/20., 30.*self._exportOpts['resolutionScale'])
+            else:
+                minSpacing = min(size / 20., 30.)
             maxTickCount = size / minSpacing
             if dif / intervals[minorIndex] <= maxTickCount:
                 levels.append((intervals[minorIndex], 0))
